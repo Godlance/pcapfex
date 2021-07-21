@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 __author__ = 'Viktor Winkelmann'
 import math
+from functools import reduce
 
 class EntropyClass:
     PLAIN = 'rawdata/plain file'

@@ -5,7 +5,7 @@ import sys
 sys.path.append('../..')
 
 from plugins.protocol_dissectors.http11 import HTTP11
-from cStringIO import StringIO
+from io import StringIO
 from contextlib import closing
 
 def getClassReference():

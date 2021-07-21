@@ -8,7 +8,7 @@ sys.path.append('../..')
 
 import os
 import core.Utils as Utils
-from Queue import Queue
+from queue import Queue
 from threading import Thread
 
 class FileManager(Thread):

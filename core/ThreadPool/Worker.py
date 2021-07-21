@@ -2,7 +2,7 @@
 __author__ = 'Viktor Winkelmann'
 
 from threading import Thread
-import Queue
+import queue
 
 class Worker(Thread):
     def __init__(self, id, tasks):
@@ -17,8 +17,8 @@ class Worker(Thread):
             try:
                 (func, object, callback) = self.tasks.get_nowait()
                 callback(func(object))
-            except Queue.Empty:
+            except queue.Empty:
                 self.stop = True
             except Exception as ex:
-                print ex
+                print(ex)
                 self.stop = True

@@ -2,11 +2,9 @@
 __author__ = 'Viktor Winkelmann'
 
 from abc import ABCMeta, abstractmethod, abstractproperty
-from Plugin import *
+from .Plugin import *
 
-class Decoder(Plugin):
-    __metaclass__ = ABCMeta
-
+class Decoder(Plugin, metaclass=ABCMeta):
     @abstractproperty
     def decoderName(cls):
         """ IMPORTANT: Override as Class Property """

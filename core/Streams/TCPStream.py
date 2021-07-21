@@ -1,9 +1,9 @@
 # -*- coding: utf8 -*-
 __author__ = 'Viktor Winkelmann'
 
-from cStringIO import StringIO
+from io import StringIO
 from contextlib import closing
-from PacketStream import *
+from .PacketStream import *
 import dpkt
 
 class TCPStream(PacketStream):
@@ -33,14 +33,14 @@ class TCPStream(PacketStream):
 
 
     def __iter__(self):
-        sortedPackets = sorted(self.packets.values(), key=lambda v: v.seq)
+        sortedPackets = sorted(list(self.packets.values()), key=lambda v: v.seq)
         for packet in sortedPackets:
             yield packet
 
     def getFirstBytes(self, count):
         with closing(StringIO()) as bytes:
             index = 0
-            sortedPackets = sorted(self.packets.values(), key=lambda v: v.seq)
+            sortedPackets = sorted(list(self.packets.values()), key=lambda v: v.seq)
             while len(bytes) < count and index < len(sortedPackets):
                 bytes.write(sortedPackets[index].data)
                 index += 1
@@ -58,7 +58,7 @@ class TCPStream(PacketStream):
         if len(self.packets) == 0:
             return False
         
-        sortedPackets = sorted(self.packets.values(), key=lambda v: v.seq)
+        sortedPackets = sorted(list(self.packets.values()), key=lambda v: v.seq)
         firstPacket = sortedPackets[0]
 
         nextSeq = firstPacket.seq + len(firstPacket.data)

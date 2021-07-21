@@ -2,10 +2,9 @@
 __author__ = 'Viktor Winkelmann'
 
 from abc import ABCMeta, abstractmethod, abstractproperty
-from Plugin import *
+from .Plugin import *
 
-class ProtocolDissector(Plugin):
-    __metaclass__ = ABCMeta
+class ProtocolDissector(Plugin, metaclass=ABCMeta):
     defaultPorts = []
     
     @abstractproperty
@@ -15,7 +14,7 @@ class ProtocolDissector(Plugin):
 
     @classmethod
     def getPriority(cls, streamPorts = ()):
-        if any(map(lambda x: x in cls.defaultPorts, streamPorts)):
+        if any([x in cls.defaultPorts for x in streamPorts]):
             return cls.basePriority - 50
 
         return cls.basePriority

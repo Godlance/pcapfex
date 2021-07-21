@@ -2,8 +2,8 @@
 __author__ = 'Viktor Winkelmann'
 
 
-from TCPStream import *
-from UDPStream import *
+from .TCPStream import *
+from .UDPStream import *
 import socket
 import os
 import sys
@@ -44,7 +44,7 @@ class StreamBuilder:
     # Verify Layer3/4 Checksums, see dpkt/ip.py __str__ method
     @classmethod
     def __verify_checksums(cls, ippacket):
-        if dpkt.in_cksum(ippacket.pack_hdr() + str(ippacket.opts)) != 0:
+        if dpkt.in_cksum(ippacket.pack_hdr() + str(ippacket.opts).encode()) != 0:
             return False
 
         if (ippacket.off & (dpkt.ip.IP_MF | dpkt.ip.IP_OFFMASK)) != 0:
@@ -74,7 +74,7 @@ class StreamBuilder:
             openUdpStreams = []
             badPackets, firstError, lastError = 0, 0, 0
 
-            print '  Size of file %s: %.2f mb' % (pcapfile, fsize / 1000000)
+            print('  Size of file %s: %.2f mb' % (pcapfile, fsize / 1000000))
             for packetNumber, (ts, complete, rawpacket) in enumerate(packets, 1):
 
                 if not complete:
@@ -170,13 +170,13 @@ class StreamBuilder:
                 else:
                     continue
 
-            self.tcpStreams += filter(lambda s: s.isValid(), openTcpStreams)
+            self.tcpStreams += [s for s in openTcpStreams if s.isValid()]
             self.udpStreams += openUdpStreams
 
             if caplenError:
-                print '\nWarning: Packet loss due to too small capture length!'
+                print('\nWarning: Packet loss due to too small capture length!')
             if badPackets:
-                print '\nWarning: %d bad packets between %d and %d.' % (badPackets, firstError, lastError)
+                print('\nWarning: %d bad packets between %d and %d.' % (badPackets, firstError, lastError))
 
     def __findLastStreamOccurenceIn(cls, list, ipSrc, portSrc, ipDst, portDst):
         for stream in list[::-1]:

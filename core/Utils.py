@@ -8,4 +8,4 @@ _printLock = Lock()
 # synchronized print
 def printl(string):
     with _printLock:
-        print string
+        print(string)

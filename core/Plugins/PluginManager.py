@@ -2,7 +2,7 @@
 __author__ = 'Viktor Winkelmann'
 import os, imp
 from collections import OrderedDict
-from EntropyClassifier import EntropyClassifier
+from .EntropyClassifier import EntropyClassifier
 
 
 class PluginManager:
@@ -21,16 +21,16 @@ class PluginManager:
         self.__loadPlugins(modulepath + self.__class__.DC_PATH, self.decoders)
 
         self.protocolDissectors = OrderedDict(
-            sorted(self.protocolDissectors.iteritems(), key=lambda x: x[1].getPriority()))
+            sorted(iter(self.protocolDissectors.items()), key=lambda x: x[1].getPriority()))
         self.dataRecognizers = OrderedDict(
-            sorted(self.dataRecognizers.iteritems(), key=lambda x: x[1].getPriority()))
+            sorted(iter(self.dataRecognizers.items()), key=lambda x: x[1].getPriority()))
         self.decoders = OrderedDict(
-            sorted(self.decoders.iteritems(), key=lambda x: x[1].getPriority()))
+            sorted(iter(self.decoders.items()), key=lambda x: x[1].getPriority()))
 
 
     def getProtocolsByHeuristics(self, streamPorts):
         return OrderedDict(
-            sorted(self.protocolDissectors.iteritems(), key=lambda x: x[1].getPriority(streamPorts)))
+            sorted(iter(self.protocolDissectors.items()), key=lambda x: x[1].getPriority(streamPorts)))
 
     def __loadPlugins(self, path, targetdict):
         for pluginfile in os.listdir(path):
@@ -48,4 +48,4 @@ class PluginManager:
             
 if __name__ == "__main__":
     pm = PluginManager()
-    print pm.protocolDissectors['http11'].getPriority()
+    print(pm.protocolDissectors['http11'].getPriority())

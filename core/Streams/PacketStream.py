@@ -3,9 +3,7 @@ __author__ = 'Viktor Winkelmann'
 from abc import ABCMeta, abstractmethod
 
 
-class PacketStream:
-    __metaclass__ = ABCMeta
-
+class PacketStream(metaclass=ABCMeta):
     def __init__(self, ipSrc, portSrc, ipDst, portDst, firstPacketNumber, pcapFile):
         self.ipSrc = ipSrc
         self.portSrc = portSrc

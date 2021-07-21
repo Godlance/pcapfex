@@ -1,8 +1,8 @@
 # -*- coding: utf8 -*-
 __author__ = 'Viktor Winkelmann'
 
-from Queue import Queue
-from Worker import Worker
+from queue import Queue
+from .Worker import Worker
 
 class Pool:
     def __init__(self, size):

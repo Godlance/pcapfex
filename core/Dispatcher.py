@@ -2,11 +2,11 @@
 __author__ = 'Viktor Winkelmann'
 
 import multiprocessing
-from ThreadPool.Pool import Pool
-from Files.FileManager import *
-from Files.FileObject import *
-from Streams.StreamBuilder import *
-from Plugins.PluginManager import *
+from .ThreadPool.Pool import Pool
+from .Files.FileManager import *
+from .Files.FileObject import *
+from .Streams.StreamBuilder import *
+from .Plugins.PluginManager import *
 
 DEBUG = False
 
@@ -19,28 +19,29 @@ class Dispatcher:
         self.outputdir = outputdir
         self.useEntropy = entropy
 
-    def _finishedSearch(self, (stream, result)):
+    def _finishedSearch(self, xxx_todo_changeme):
+        (stream, result) = xxx_todo_changeme
         Utils.printl("Found %d files in %s stream %s" % (len(result), stream.protocol, stream.infos))
-        map(self.filemanager.addFile, result)
+        list(map(self.filemanager.addFile, result))
 
     def run(self):
         if os.path.exists(self.outputdir):
-            print "Output folder \'%s\' already exists! Exiting..." % (self.outputdir,)
+            print("Output folder \'%s\' already exists! Exiting..." % (self.outputdir,))
             self.filemanager.exit()
             return
 
 
-        print "Reassembling streams..."
+        print("Reassembling streams...")
         streambuilder = StreamBuilder(self.pcapfile, **self.kwargs)
         allstreams = streambuilder.tcpStreams + streambuilder.udpStreams
 
-        print "\nStream Reassembly finished.\n\tFile %s has a total of %d single-direction streams." % (self.pcapfile,
-                                                                                                   len(allstreams))
+        print("\nStream Reassembly finished.\n\tFile %s has a total of %d single-direction streams." % (self.pcapfile,
+                                                                                                   len(allstreams)))
 
-        print "Searching streams for forensic evidence...\n"
+        print("Searching streams for forensic evidence...\n")
         if DEBUG:
             # Single threaded search for easier debugging
-            map(lambda s: self._finishedSearch(self._findFiles(s)), allstreams)
+            list(map(lambda s: self._finishedSearch(self._findFiles(s)), allstreams))
         else:
             # Multi threaded search as standard
             workers = Pool(multiprocessing.cpu_count())
@@ -50,7 +51,7 @@ class Dispatcher:
 
 
         self.filemanager.exit()
-        print "Evidence search has finished.\n"
+        print("Evidence search has finished.\n")
 
 
 

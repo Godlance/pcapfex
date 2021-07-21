@@ -2,12 +2,12 @@
 __author__ = 'Viktor Winkelmann'
 
 from abc import ABCMeta, abstractproperty
-from Plugin import *
+from .Plugin import *
 try:
     import regex as re
-    print 'Using concurrency enabled regex module.'
+    print('Using concurrency enabled regex module.')
 except:
-    print 'Consider installing the \'regex\' module using \'pip install regex\' to improve performance on multicore systems.'
+    print('Consider installing the \'regex\' module using \'pip install regex\' to improve performance on multicore systems.')
     import re
 
 #from pympler import tracker
@@ -28,9 +28,7 @@ class DataCategory:
         return self.__dict__.__iter__()
 
 
-class DataRecognizer(Plugin):
-    __metaclass__ = ABCMeta
-
+class DataRecognizer(Plugin, metaclass=ABCMeta):
     @classmethod
     def getPriority(cls):
         return cls.basePriority

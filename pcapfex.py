@@ -19,14 +19,14 @@ parser.add_argument("--T", dest='udpTimeout', help="set timeout for UDP-stream h
                     type=int, default=120)
 
 
-print 'pcapfex - Packet Capture Forensic Evidence Extractor - version %s' % (VERSION,)
-print '----------=------===-----=--------=---------=------------------' + '-'*len(VERSION) + '\n'
+print('pcapfex - Packet Capture Forensic Evidence Extractor - version %s' % (VERSION,))
+print('----------=------===-----=--------=---------=------------------' + '-'*len(VERSION) + '\n')
 args = parser.parse_args()
 
 if not args.verifyChecksums:
-    print 'Packet checksum verification disabled.'
+    print('Packet checksum verification disabled.')
 if args.entropy:
-    print 'Using entropy and statistical analysis for raw extraction and classification of unknown data.'
+    print('Using entropy and statistical analysis for raw extraction and classification of unknown data.')
 
 
 dispatcher = Dispatcher(args.input, args.output, args.entropy,

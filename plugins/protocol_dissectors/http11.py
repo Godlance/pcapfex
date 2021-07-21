@@ -5,7 +5,7 @@ import sys
 sys.path.append('../..')
 
 from core.Plugins.ProtocolDissector import *
-from cStringIO import StringIO
+from io import StringIO
 from contextlib import closing
 from gzip import GzipFile
 
@@ -34,7 +34,7 @@ class HTTP11(ProtocolDissector):
         if not payload:
             return None
 
-        if encoding not in cls.decoders.keys():
+        if encoding not in list(cls.decoders.keys()):
             return payload
 
         try:

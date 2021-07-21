@@ -3,9 +3,7 @@ __author__ = 'Viktor Winkelmann'
 
 from abc import ABCMeta, abstractmethod
 
-class Plugin:
-    __metaclass__ = ABCMeta
-
+class Plugin(metaclass=ABCMeta):
     basePriority = 50
 
     @abstractmethod

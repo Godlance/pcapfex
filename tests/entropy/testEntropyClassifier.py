@@ -28,7 +28,7 @@ class TestEntropyClassifier(unittest.TestCase):
         pwd = '0123456789ABCDEF'
         aes = AES.new(pwd, AES.MODE_CBC, IV='\x42'*16)
         arc4 = ARC4.new(pwd)
-        print len(self.text)
+        print(len(self.text))
         self.enc1 = aes.encrypt(self.text)
         self.enc2 = arc4.encrypt(self.text)
 
